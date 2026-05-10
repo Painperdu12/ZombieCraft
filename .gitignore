@@ -1,0 +1,39 @@
+# --- Java / Gradle ---
+.gradle/
+build/
+bin/
+out/
+*.class
+*.jar
+
+# --- Minecraft Forge (Généré par setupDecompWorkspace) ---
+eclipse/
+idea/
+*.iws
+*.iml
+*.ipr
+run/
+.reobf/
+
+# --- IDE (Eclipse) ---
+.settings/
+.metadata/
+.classpath
+.project
+
+# --- IDE (IntelliJ) ---
+.idea/
+*.iml
+*.iws
+*.ipr
+out/
+
+# --- Logs & Temporaires ---
+*.log
+logs/
+.DS_Store
+Thumbs.db
+
+# --- Fichiers système spécifiques ---
+/buildSrc/build/
+/buildSrc/.gradle/

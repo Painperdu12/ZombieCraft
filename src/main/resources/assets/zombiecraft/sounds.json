@@ -1,0 +1,23 @@
+{
+    "block.waterPump.drip": {
+        "category": "block",
+        "sounds": [
+            "zombiecraft:block/waterPump/drip1",
+            "zombiecraft:block/waterPump/drip2",
+            "zombiecraft:block/waterPump/drip3",
+            "zombiecraft:block/waterPump/drip4"
+        ]
+    },
+    "block.waterPump.use": {
+        "category": "block",
+        "sounds": [
+            "zombiecraft:block/waterPump/use"
+        ]
+    },
+    "item.can.open": {
+        "category": "player",
+        "sounds": [
+            "zombiecraft:item/can/open"
+        ]
+    }
+}

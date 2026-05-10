@@ -1,0 +1,5 @@
+------ CHOSES A FAIRE ------
+
+- Tois types d'entité : Humain, Militaires, Animaux
+- Chaque type à son équivalent infecté
+- Tuer ces infectés donne des caps

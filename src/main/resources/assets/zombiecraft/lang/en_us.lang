@@ -1,0 +1,18 @@
+tile.BrownBricks.name=Brown Bricks
+
+item.bandage.name=Bandage
+item.waterBottle.name=Water Bottle
+item.emptyBottle.name=Empty Bottle
+item.blueEnergyBar.name=Blue Energy Bar
+item.greenEnergyBar.name=Green Energy Bar
+item.redEnergyBar.name=Red Energy Bar
+itemGroup.zombiecraftItems=ZombieCraft - Items
+itemGroup.zombiecraftBlocks=ZombieCraft - Blocks
+itemGroup.zombiecraftProps=ZombieCraft - Props
+
+key.categories.zombiecraft=ZombieCraft
+key.zombiecraft.test=Packet test
+
+death.attack.thirst=%s forgot to drink!
+
+zombiecraft.command.help=/zombiecraft help

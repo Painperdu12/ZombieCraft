@@ -1,0 +1,16 @@
+[
+{
+  "modid": "zombiecraft",
+  "name": "ZombieCraft",
+  "description": "Remake of the fantastic, but sadly discontinued, Decimation mod on the same game version.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Painperdu12"],
+  "credits": "The Forge and FML guys & ScottehBoeh, original creator of Decimation, the main inspiration source.",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
