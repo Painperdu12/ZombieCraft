@@ -48,4 +48,8 @@ public class PlayerHelper {
 	public static void removeHeldItem(EntityPlayer player) {
 		player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
 	}	
+	
+	public static void addFood(EntityPlayer player, int food, float saturation) {
+		player.getFoodStats().addStats(food, saturation);
+	}
 }

@@ -22,7 +22,7 @@ public class CommonProxy {
 		Logger.infoInit("Registering all ZombieCraft game elements...");
 		
 		ModBlocks.register();
-		ModTiles.registerTiles();
+		ModTiles.register();
 		ModEntities.register();
 		ModItems.register();
 		

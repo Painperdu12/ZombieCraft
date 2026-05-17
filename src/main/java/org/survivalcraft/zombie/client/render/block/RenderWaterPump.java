@@ -20,11 +20,15 @@ public class RenderWaterPump extends TileEntitySpecialRenderer {
 	
 	@Override
 	public void renderTileEntityAt(TileEntity tile, double x, double y, double z, float pTicks) {
+		int meta = tile.getWorldObj().getBlockMetadata(tile.xCoord, tile.yCoord, tile.zCoord);
+		
 		glPushMatrix();
 		glTranslated(x + 0.5d, y + 1.5d, z + 0.5d);
-		glRotatef(180.0f, 1, 0, 0);
 		
-		Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
+	    glRotatef(180.0F, 1, 0, 0); 
+	    glRotatef(meta * 90.0F, 0, 1, 0); //Rotation Y (0-3 -> 0°, 90°, 180°, 270°)		
+		
+	    Minecraft.getMinecraft().getTextureManager().bindTexture(TEXTURE);
 		this.waterPumpModel.render(null, 0, 0, 0, 0, 0, 0.0625f);
 		
 		glPopMatrix();

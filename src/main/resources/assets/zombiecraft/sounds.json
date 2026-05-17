@@ -14,10 +14,36 @@
             "zombiecraft:block/waterPump/use"
         ]
     },
+    "block.waterPump.sink": {
+        "category": "block",
+        "sounds": [
+            "zombiecraft:block/waterPump/sink"
+        ]
+    },
     "item.can.open": {
         "category": "player",
         "sounds": [
             "zombiecraft:item/can/open"
+        ]
+    },    
+    "item.bandage.use": {
+            "category": "player",
+            "sounds": [
+                "zombiecraft:item/bandage/use1",
+                "zombiecraft:item/bandage/use2",
+                "zombiecraft:item/bandage/use3"
+            ]
+    },
+    "item.syringe.use": {
+                "category": "player",
+                "sounds": [
+                    "zombiecraft:item/syringe/use"
+                ]
+    },
+    "player.cough": {
+        "category": "player",
+        "sounds": [
+            "zombiecraft:player/cough"
         ]
     }
 }

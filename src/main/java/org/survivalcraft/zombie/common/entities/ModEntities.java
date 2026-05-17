@@ -14,5 +14,7 @@ public class ModEntities {
 		
         EntityRegistry.registerGlobalEntityID(EntityInfected.class, "Infected", EntityRegistry.findGlobalUniqueEntityId(), new Color(0, 255, 0).getRGB(), new Color(255, 0, 0).getRGB());
 		EntityRegistry.registerModEntity(EntityInfected.class, "Infected", 0, ZombieCraft.instance(), 80, 10, true);
+		
+		EntityRegistry.registerModEntity(EntitySeat.class, "Seat", 1, ZombieCraft.instance(), 15, 10, false);
 	}
 }

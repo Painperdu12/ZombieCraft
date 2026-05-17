@@ -14,6 +14,7 @@ public class MessageS2CPlayerData extends MessageBase<MessageS2CPlayerData> {
 	public int deaths;
 	public int daysPassed;
 	public long lastHurtTime;
+	public boolean infected;
 	
 	public MessageS2CPlayerData() { }
 	
@@ -24,6 +25,7 @@ public class MessageS2CPlayerData extends MessageBase<MessageS2CPlayerData> {
 		this.deaths = data.getDeaths();
 		this.daysPassed = data.getDaysPassed();
 		this.lastHurtTime = data.getLastHurtTime();
+		this.infected = data.isInfected();
 	}
 	
 	@Override
@@ -34,6 +36,7 @@ public class MessageS2CPlayerData extends MessageBase<MessageS2CPlayerData> {
 		this.deaths = buf.readInt();
 		this.daysPassed = buf.readInt();
 		this.lastHurtTime = buf.readLong();
+		this.infected = buf.readBoolean();
 	}
 
 	@Override
@@ -44,6 +47,7 @@ public class MessageS2CPlayerData extends MessageBase<MessageS2CPlayerData> {
 		buf.writeInt(this.deaths);
 		buf.writeInt(this.daysPassed);
 		buf.writeLong(this.lastHurtTime);
+		buf.writeBoolean(this.infected);
 	}
 
 	@Override
