@@ -5,7 +5,7 @@ import java.util.Random;
 import org.survivalcraft.zombie.common.ExtendedPlayerData;
 import org.survivalcraft.zombie.common.TabsZombieCraft;
 import org.survivalcraft.zombie.common.items.ModItems;
-import org.survivalcraft.zombie.common.tiles.TileEntityWaterPump;
+import org.survivalcraft.zombie.common.tiles.props.TileEntityWaterPump;
 import org.survivalcraft.zombie.utils.ChatHelper;
 import org.survivalcraft.zombie.utils.PlayerHelper;
 
@@ -17,13 +17,19 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 
 public class BlockWaterPump extends BlockProps {
 
 	public BlockWaterPump() {
 		this.setBlockName("waterPump");
-		this.setBlockTextureName("zombiecraft:props/waterPump");
+		this.setBlockTextureName("zombiecraft:props/waterPump_icon");
+	}
+	
+	@Override
+	public void setBlockBoundsBasedOnState(IBlockAccess access, int x, int y, int z) {
+		this.setBlockBounds(0, 0, 0, 1, 2, 1);
 	}
 	
 	@Override
@@ -43,7 +49,7 @@ public class BlockWaterPump extends BlockProps {
 		}
 		
 		if(rand.nextInt(50) == 0) {
-			world.playSound(x, y, z, "zombiecraft:block.waterPump.drip", 0.5f, 1f, false);
+			world.playSound(x, y, z, "zombiecraft:block.waterPump.drip", 0.4f, 1f, false);
 		}
 	}
 	
@@ -60,18 +66,32 @@ public class BlockWaterPump extends BlockProps {
 			
 			return true;
 		} else if(heldItem.getItem() == Items.glass_bottle || heldItem.getItem() == ModItems.emptyBottle) {
-			ChatHelper.sendMessage(player, "&7You have filled your empty bottle with Water.");
+			ChatHelper.sendMessage(player, "&7You have filled your empty Bottle with Water.");
 			PlayerHelper.addSafeItem(player, new ItemStack(ModItems.waterBottle, 1));
 			
-			world.playSoundAtEntity(player, "zombiecraft:block.waterPump.use", 0.5f, 1.0f);
+			this.playUseSound(world, player);
 			
 			heldItem.stackSize--;
 			if(heldItem.stackSize <= 0) PlayerHelper.removeHeldItem(player);
 		
 			return true;
+		} else if(heldItem.getItem() == ModItems.dirtyBandage) {
+			ChatHelper.sendMessage(player, "&7You have cleaned a dirty Bandage.");
+			PlayerHelper.addSafeItem(player, new ItemStack(ModItems.bandage, 1));
+			
+			this.playUseSound(world, player);
+			
+			heldItem.stackSize--;
+			if(heldItem.stackSize <= 0) PlayerHelper.removeHeldItem(player);
+			
+			return true;
 		}
 		
 		return false; 
+	}
+	
+	protected void playUseSound(World world, EntityPlayer player) {
+		world.playSoundAtEntity(player, "zombiecraft:block.waterPump.use", 0.5f, 1.0f);
 	}
 	
 	@Override

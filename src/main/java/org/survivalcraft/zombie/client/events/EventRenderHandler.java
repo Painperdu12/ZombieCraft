@@ -1,26 +1,35 @@
 package org.survivalcraft.zombie.client.events;
 
-import static org.lwjgl.opengl.GL11.*;
-
-import java.awt.Color;
-
-import org.survivalcraft.zombie.client.ClientReferences;
+import org.survivalcraft.zombie.client.ClientVariables;
+import org.survivalcraft.zombie.client.gui.ClientReferences;
 import org.survivalcraft.zombie.client.gui.GuiHelper;
 import org.survivalcraft.zombie.common.ExtendedPlayerData;
-import org.survivalcraft.zombie.utils.ChatHelper;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraftforge.client.GuiIngameForge;
+import net.minecraftforge.client.event.DrawBlockHighlightEvent;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
 
-public class EventRenderHandler extends Gui {
-		
+public class EventRenderHandler {
+	
+	@SubscribeEvent
+	public void onFogDensity(EntityViewRenderEvent.FogDensity event) {
+		if(ClientVariables.customFogEnabled) {
+			event.setCanceled(true);
+			event.density = ClientVariables.getCustomFogDensityByIndex(ClientVariables.weatherTypeIndex);
+		}
+	}
+	
+	@SubscribeEvent
+	public void onRenderBlock(DrawBlockHighlightEvent event) {
+		if(!event.player.capabilities.isCreativeMode) event.setCanceled(true);
+	}
+	
 	@SubscribeEvent
 	public void onRenderGameOverlay(RenderGameOverlayEvent event) {
 		Minecraft minecraft = Minecraft.getMinecraft();
@@ -37,7 +46,6 @@ public class EventRenderHandler extends Gui {
 		
 		if(event.type == ElementType.DEBUG) {
 			if(!minecraft.thePlayer.capabilities.isCreativeMode) {
-				ChatHelper.sendError(minecraft.thePlayer, "You can't open the debug screen while playing!");
 				event.setCanceled(true);
 			}
 		}
@@ -65,9 +73,19 @@ public class EventRenderHandler extends Gui {
 	} 
 	
 	private void renderPanicOverlay(ScaledResolution res, Minecraft minecraft) {
-		if(minecraft.thePlayer.getHealth() < 7 && !minecraft.thePlayer.capabilities.isCreativeMode) {
-			GuiHelper.renderRect(0, 0, minecraft.displayWidth, minecraft.displayHeight, 255, 15, 15, 40);
+		if(minecraft.thePlayer.capabilities.isCreativeMode) return;
+		ExtendedPlayerData data = ExtendedPlayerData.get(minecraft.thePlayer);
+		
+		if(data.isInfected()) {
+			GuiHelper.renderRect(0, 0, minecraft.displayWidth, minecraft.displayHeight, 100, 225, 25, 40);
+		} else {
+			if(minecraft.thePlayer.getHealth() < 7) {
+				GuiHelper.renderRect(0, 0, minecraft.displayWidth, minecraft.displayHeight, 255, 15, 15, 60);
+			} else if(minecraft.thePlayer.getHealth() < 10) {
+				GuiHelper.renderRect(0, 0, minecraft.displayWidth, minecraft.displayHeight, 255, 15, 15, 40);
+			}
 		}
+		
 	}
 	
 	private void renderInformationsOverlay(ScaledResolution res, Minecraft minecraft) {

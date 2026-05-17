@@ -1,5 +1,4 @@
 # --- Java / Gradle ---
-.gradle/
 build/
 bin/
 out/
@@ -20,13 +19,6 @@ run/
 .metadata/
 .classpath
 .project
-
-# --- IDE (IntelliJ) ---
-.idea/
-*.iml
-*.iws
-*.ipr
-out/
 
 # --- Logs & Temporaires ---
 *.log

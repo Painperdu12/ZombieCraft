@@ -4,6 +4,7 @@ import java.util.Random;
 
 import org.survivalcraft.zombie.common.network.NetworkHandler;
 import org.survivalcraft.zombie.common.network.messages.MessageS2CPlayerData;
+import org.survivalcraft.zombie.server.ServerVariables;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -22,6 +23,7 @@ public class ExtendedPlayerData implements IExtendedEntityProperties {
 	public static final String DEATHS_NAME = "Deaths";
 	public static final String DAYS_PASSED_NAME = "DaysPassed";
 	public static final String LAST_HURT_NAME = "LastHurtTime";
+	public static final String INFECTED_NAME = "Infected";
 	
 	public static void register(EntityPlayer player) {
 		player.registerExtendedProperties(PROPERTIES_NAME, new ExtendedPlayerData(player));
@@ -37,6 +39,7 @@ public class ExtendedPlayerData implements IExtendedEntityProperties {
 	
 	private boolean legBroken;
 	private boolean bleeding;
+	private boolean infected;
 	
 	private int waterAmount;
 	private int waterCountdown;
@@ -46,12 +49,12 @@ public class ExtendedPlayerData implements IExtendedEntityProperties {
 	private int deaths;
 	private int daysPassed;
 	
-	
 	public ExtendedPlayerData(EntityPlayer player) {
 		this.player = player;
 		this.rand = new Random();
 		this.legBroken = false;
 		this.bleeding = false;
+		this.infected = false;
 		this.waterCountdown = 1600;
 		this.waterAmount = maxWaterAmount;
 		this.deaths = 0;
@@ -59,7 +62,7 @@ public class ExtendedPlayerData implements IExtendedEntityProperties {
 		this.lastHurtTime = 0l;
 	}
 	
-	public void sync() {		
+	private void sync() {		
 		if(!this.player.worldObj.isRemote) {
 			MessageS2CPlayerData message = new MessageS2CPlayerData(this);
 			EntityPlayerMP onlinePlayer = (EntityPlayerMP) player;
@@ -73,21 +76,21 @@ public class ExtendedPlayerData implements IExtendedEntityProperties {
 	
 	public void onUpdate() {		
 		if(!player.worldObj.isRemote) {
-			if(this.waterCountdown <= 0) {
-				if(player.getHealth() < 5) this.waterCountdown = 680;
+			if(this.waterCountdown <= 0 && ServerVariables.enableThirst) {
+				if(player.getHealth() < 5) this.waterCountdown = 480;
 				else if(player.getHealth() < 10) this.waterCountdown = 780;
-				else if(player.getHealth() < 15) this.waterCountdown = 1000;
-				else this.waterCountdown = 1600; 
+				else if(player.getHealth() < 15) this.waterCountdown = 980;
+				else this.waterCountdown = 1080; 
 					
 				this.subWater(1);
 			
 				if(this.waterAmount <= 0) {
 					this.waterCountdown = 40;
-					player.attackEntityFrom(ModDamageSources.THIRST, 0.5f);
+					player.attackEntityFrom(ModDamageSources.THIRST, 1f);
 				}
 			}
 			
-			if(rand.nextFloat() < 0.85f) { //85% chance
+			if(rand.nextFloat() < 0.90f) { //90% chance
 				this.waterCountdown--;
 			}
 			
@@ -108,6 +111,9 @@ public class ExtendedPlayerData implements IExtendedEntityProperties {
 		this.deaths += 1;
 		this.daysPassed = 0;
 		this.lastHurtTime = 0l;
+		this.infected = false;
+		this.bleeding = false;
+		this.legBroken = false;
 		
 		this.scheduleSync();
 	} 
@@ -118,6 +124,7 @@ public class ExtendedPlayerData implements IExtendedEntityProperties {
 		this.waterAmount = source.waterAmount;
 		this.deaths = source.deaths;
 		this.daysPassed = source.daysPassed;
+		this.infected = source.infected;
 	}
 	
 	public void handleMesage(MessageS2CPlayerData msg) {
@@ -127,6 +134,7 @@ public class ExtendedPlayerData implements IExtendedEntityProperties {
 		this.deaths = msg.deaths;
 		this.daysPassed = msg.daysPassed;
 		this.lastHurtTime = msg.lastHurtTime;
+		this.infected = msg.infected;
 	}
 	
 	@Override
@@ -139,6 +147,7 @@ public class ExtendedPlayerData implements IExtendedEntityProperties {
 		nbt.setInteger(DAYS_PASSED_NAME, daysPassed);
 		nbt.setInteger(DEATHS_NAME, deaths);
 		nbt.setLong(LAST_HURT_NAME, lastHurtTime);
+		nbt.setBoolean(INFECTED_NAME, infected);
 		
 		tag.setTag(PROPERTIES_NAME, nbt);
 		this.scheduleSync();
@@ -154,6 +163,7 @@ public class ExtendedPlayerData implements IExtendedEntityProperties {
 		this.deaths = nbt.getInteger(DEATHS_NAME);
 		this.daysPassed = nbt.getInteger(DAYS_PASSED_NAME);
 		this.lastHurtTime = nbt.getLong(LAST_HURT_NAME);
+		this.infected = nbt.getBoolean(INFECTED_NAME);
 		
 		this.scheduleSync();
 	}
@@ -250,5 +260,16 @@ public class ExtendedPlayerData implements IExtendedEntityProperties {
 	public void setHurted() {
 		this.lastHurtTime = System.currentTimeMillis();
 		this.scheduleSync();
+	}
+	
+	public boolean isInfected() {
+		return infected;
+	}
+	
+	public void setInfected(boolean infected) {
+		if(this.infected != infected) {
+			this.infected = infected;
+			this.scheduleSync();
+		}
 	}
 } 

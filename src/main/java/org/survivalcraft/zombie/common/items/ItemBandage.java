@@ -23,21 +23,22 @@ public class ItemBandage extends Item {
 	
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer player, List strings, boolean advanced) {
-		strings.add(ChatHelper.getFormattedMessage("&cMedical Item - For Stopping Bleding"));
+		strings.add(ChatHelper.getFormattedMessage("&cMedical Item - For Stopping Bleeding"));
 	}
 	
 	@Override
 	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
         player.setItemInUse(stack, this.getMaxItemUseDuration(stack));
-        //TODO Sound effect
         return stack;
     }
 	
 	@Override
 	public ItemStack onEaten(ItemStack stack, World world, EntityPlayer player) {
 		if(world.isRemote) {
-			if(ExtendedPlayerData.get(player).isBleeding()) ChatHelper.sendMessage(player, "&aYou treated your wound.");
-			else ChatHelper.sendMessage(player, "&cYou are not bleding!");
+			if(ExtendedPlayerData.get(player).isBleeding()) {
+				ChatHelper.sendMessage(player, "&aYou treated your wound.");
+				world.playSoundAtEntity(player, "zombiecraft:item.bandage.use", 1f, 1f);
+			} else ChatHelper.sendMessage(player, "&cYou are not bleeding!");
 		} else {
 			if(ExtendedPlayerData.get(player).isBleeding()) {
 				stack.stackSize--;
