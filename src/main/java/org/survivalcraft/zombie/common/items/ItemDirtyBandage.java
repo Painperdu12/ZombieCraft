@@ -11,14 +11,14 @@ import net.minecraft.item.ItemStack;
 
 public class ItemDirtyBandage extends Item {
 
-	public ItemDirtyBandage() {
-		this.setCreativeTab(TabsZombieCraft.ITEMS);
-		this.setUnlocalizedName("dirtyBandage");
-		this.setTextureName("zombiecraft:dirtyBandage");
-	}
-	
-	@Override
-	public void addInformation(ItemStack stacl, EntityPlayer player, List strings, boolean advanced) {
-		strings.add(ChatHelper.getFormattedMessage("&7Can be cleaned using water"));
-	}
+    public ItemDirtyBandage() {
+	this.setCreativeTab(TabsZombieCraft.ITEMS);
+	this.setUnlocalizedName("dirtyBandage");
+	this.setTextureName("zombiecraft:dirtyBandage");
+    }
+
+    @Override
+    public void addInformation(ItemStack stacl, EntityPlayer player, List strings, boolean advanced) {
+	strings.add(ChatHelper.getFormattedMessage("&7Can be cleaned using water"));
+    }
 }

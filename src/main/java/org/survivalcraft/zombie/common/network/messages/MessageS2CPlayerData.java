@@ -8,54 +8,56 @@ import net.minecraft.entity.player.EntityPlayer;
 
 public class MessageS2CPlayerData extends MessageBase<MessageS2CPlayerData> {
 
-	public boolean legBroken;
-	public boolean bleeding;
-	public int waterAmount;
-	public int deaths;
-	public int daysPassed;
-	public long lastHurtTime;
-	public boolean infected;
-	
-	public MessageS2CPlayerData() { }
-	
-	public MessageS2CPlayerData(ExtendedPlayerData data) {
-		this.legBroken = data.isLegBroken();
-		this.bleeding = data.isBleeding();
-		this.waterAmount = data.getWaterAmount();
-		this.deaths = data.getDeaths();
-		this.daysPassed = data.getDaysPassed();
-		this.lastHurtTime = data.getLastHurtTime();
-		this.infected = data.isInfected();
-	}
-	
-	@Override
-	public void fromBytes(ByteBuf buf) {
-		this.legBroken = buf.readBoolean();
-		this.bleeding = buf.readBoolean();
-		this.waterAmount = buf.readInt();
-		this.deaths = buf.readInt();
-		this.daysPassed = buf.readInt();
-		this.lastHurtTime = buf.readLong();
-		this.infected = buf.readBoolean();
-	}
+    public boolean legBroken;
+    public boolean bleeding;
+    public int waterAmount;
+    public int deaths;
+    public int daysPassed;
+    public long lastHurtTime;
+    public boolean infected;
 
-	@Override
-	public void toBytes(ByteBuf buf) {
-		buf.writeBoolean(this.legBroken);
-		buf.writeBoolean(this.bleeding);
-		buf.writeInt(this.waterAmount);
-		buf.writeInt(this.deaths);
-		buf.writeInt(this.daysPassed);
-		buf.writeLong(this.lastHurtTime);
-		buf.writeBoolean(this.infected);
-	}
+    public MessageS2CPlayerData() {
+    }
 
-	@Override
-	public void handleClient(MessageS2CPlayerData message, EntityPlayer player) {
-		ExtendedPlayerData data = ExtendedPlayerData.get(player);	
-		data.handleMesage(message);
-	}
+    public MessageS2CPlayerData(ExtendedPlayerData data) {
+	this.legBroken = data.isLegBroken();
+	this.bleeding = data.isBleeding();
+	this.waterAmount = data.getWaterAmount();
+	this.deaths = data.getDeaths();
+	this.daysPassed = data.getDaysPassed();
+	this.lastHurtTime = data.getLastHurtTime();
+	this.infected = data.isInfected();
+    }
 
-	@Override
-	public void handleServer(MessageS2CPlayerData message, EntityPlayer player) { }
+    @Override
+    public void fromBytes(ByteBuf buf) {
+	this.legBroken = buf.readBoolean();
+	this.bleeding = buf.readBoolean();
+	this.waterAmount = buf.readInt();
+	this.deaths = buf.readInt();
+	this.daysPassed = buf.readInt();
+	this.lastHurtTime = buf.readLong();
+	this.infected = buf.readBoolean();
+    }
+
+    @Override
+    public void toBytes(ByteBuf buf) {
+	buf.writeBoolean(this.legBroken);
+	buf.writeBoolean(this.bleeding);
+	buf.writeInt(this.waterAmount);
+	buf.writeInt(this.deaths);
+	buf.writeInt(this.daysPassed);
+	buf.writeLong(this.lastHurtTime);
+	buf.writeBoolean(this.infected);
+    }
+
+    @Override
+    public void handleClient(MessageS2CPlayerData message, EntityPlayer player) {
+	ExtendedPlayerData data = ExtendedPlayerData.get(player);
+	data.handleMesage(message);
+    }
+
+    @Override
+    public void handleServer(MessageS2CPlayerData message, EntityPlayer player) {
+    }
 }

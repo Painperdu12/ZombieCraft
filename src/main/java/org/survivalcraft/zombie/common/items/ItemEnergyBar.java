@@ -13,22 +13,22 @@ import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 
 public class ItemEnergyBar extends ItemFood {
-	
-	private final int givenPotionId;
-	
-	public ItemEnergyBar(String name, int foodGiven, int givenPotionId) {
-		super(foodGiven, false);
-		this.givenPotionId = givenPotionId;
-		
-		this.setAlwaysEdible();
-		this.setTextureName("zombiecraft:" + name);
-		this.setUnlocalizedName(name);
-		this.setCreativeTab(TabsZombieCraft.ITEMS);
-		this.setPotionEffect(givenPotionId, 8, 1, 1.0f);
-	}
-	
-	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List strings, boolean advaanced) {
-		strings.add(ChatHelper.getFormattedMessage("&7Give &c" + I18n.format(Potion.potionTypes[this.givenPotionId].getName(), new Object[0]) + " II&7 for &c8 seconds"));
-	}
+
+    private final int givenPotionId;
+
+    public ItemEnergyBar(String name, int foodGiven, int givenPotionId) {
+	super(foodGiven, false);
+	this.givenPotionId = givenPotionId;
+
+	this.setAlwaysEdible();
+	this.setTextureName("zombiecraft:" + name);
+	this.setUnlocalizedName(name);
+	this.setCreativeTab(TabsZombieCraft.ITEMS);
+	this.setPotionEffect(givenPotionId, 8, 1, 1.0f);
+    }
+
+    @Override
+    public void addInformation(ItemStack stack, EntityPlayer player, List strings, boolean advaanced) {
+	strings.add(ChatHelper.getFormattedMessage("&7Give &c" + I18n.format(Potion.potionTypes[this.givenPotionId].getName(), new Object[0]) + " II&7 for &c8 seconds"));
+    }
 }

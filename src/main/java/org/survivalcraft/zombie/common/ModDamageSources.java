@@ -4,6 +4,6 @@ import net.minecraft.util.DamageSource;
 
 public class ModDamageSources {
 
-	public static final DamageSource THIRST = new DamageSource("thirst").setDamageBypassesArmor();
-	
+    public static final DamageSource THIRST = new DamageSource("thirst").setDamageBypassesArmor();
+
 }

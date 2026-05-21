@@ -14,49 +14,50 @@ import net.minecraft.world.World;
 
 public class ItemBandage extends Item {
 
-	public ItemBandage() {
-		this.setUnlocalizedName("bandage");
-		this.setTextureName("zombiecraft:bandage");
-		this.setCreativeTab(TabsZombieCraft.ITEMS);
-		this.setMaxStackSize(4);
-	}
-	
-	@Override
-	public void addInformation(ItemStack stack, EntityPlayer player, List strings, boolean advanced) {
-		strings.add(ChatHelper.getFormattedMessage("&cMedical Item - For Stopping Bleeding"));
-	}
-	
-	@Override
-	public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
-        player.setItemInUse(stack, this.getMaxItemUseDuration(stack));
-        return stack;
+    public ItemBandage() {
+	this.setUnlocalizedName("bandage");
+	this.setTextureName("zombiecraft:bandage");
+	this.setCreativeTab(TabsZombieCraft.ITEMS);
+	this.setMaxStackSize(4);
     }
-	
-	@Override
-	public ItemStack onEaten(ItemStack stack, World world, EntityPlayer player) {
-		if(world.isRemote) {
-			if(ExtendedPlayerData.get(player).isBleeding()) {
-				ChatHelper.sendMessage(player, "&aYou treated your wound.");
-				world.playSoundAtEntity(player, "zombiecraft:item.bandage.use", 1f, 1f);
-			} else ChatHelper.sendMessage(player, "&cYou are not bleeding!");
-		} else {
-			if(ExtendedPlayerData.get(player).isBleeding()) {
-				stack.stackSize--;
-				ExtendedPlayerData.get(player).setBleeding(false);
-			}
-		}
-		
-		return stack;
+
+    @Override
+    public void addInformation(ItemStack stack, EntityPlayer player, List strings, boolean advanced) {
+	strings.add(ChatHelper.getFormattedMessage("&cMedical Item - For Stopping Bleeding"));
+    }
+
+    @Override
+    public ItemStack onItemRightClick(ItemStack stack, World world, EntityPlayer player) {
+	player.setItemInUse(stack, this.getMaxItemUseDuration(stack));
+	return stack;
+    }
+
+    @Override
+    public ItemStack onEaten(ItemStack stack, World world, EntityPlayer player) {
+	if(world.isRemote) {
+	    if(ExtendedPlayerData.get(player).isBleeding()) {
+		ChatHelper.sendMessage(player, "&aYou treated your wound.");
+		world.playSoundAtEntity(player, "zombiecraft:item.bandage.use", 1f, 1f);
+	    } else
+		ChatHelper.sendMessage(player, "&cYou are not bleeding!");
+	} else {
+	    if(ExtendedPlayerData.get(player).isBleeding()) {
+		stack.stackSize--;
+		ExtendedPlayerData.get(player).setBleeding(false);
+	    }
 	}
-	
-	@Override
-	public EnumAction getItemUseAction(ItemStack stack) {
-		return EnumAction.block;
-	}
-	
-	@Override
-	public int getMaxItemUseDuration(ItemStack stack) {
-		return 32;
-	}
-	
+
+	return stack;
+    }
+
+    @Override
+    public EnumAction getItemUseAction(ItemStack stack) {
+	return EnumAction.block;
+    }
+
+    @Override
+    public int getMaxItemUseDuration(ItemStack stack) {
+	return 32;
+    }
+
 }

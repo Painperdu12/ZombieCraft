@@ -7,11 +7,11 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
 public class ServerProxy extends CommonProxy {
 
-	@Override
-	public void preInit(FMLPreInitializationEvent event) {
-		super.preInit(event);
-		
-		Logger.infoInit("Loading Server-side configuration...");
-		ServerConfiguration.init(event.getSuggestedConfigurationFile());
-	}
+    @Override
+    public void preInit(FMLPreInitializationEvent event) {
+	super.preInit(event);
+
+	Logger.initInfo("Loading Server-side configuration...");
+	ServerConfiguration.init(event.getSuggestedConfigurationFile());
+    }
 }

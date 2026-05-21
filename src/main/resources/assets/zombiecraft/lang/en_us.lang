@@ -39,6 +39,7 @@ item.blueEnergyBar.name=Blue Energy Bar
 item.greenEnergyBar.name=Green Energy Bar
 item.redEnergyBar.name=Red Energy Bar
 item.fireAxe.name=Fire Axe
+item.wires.name=Wires
 itemGroup.zombiecraftItems=ZombieCraft - Items
 itemGroup.zombiecraftBlocks=ZombieCraft - Blocks
 itemGroup.zombiecraftProps=ZombieCraft - Props
@@ -49,3 +50,4 @@ key.zombiecraft.test=Packet test
 death.attack.thirst=%s forgot to drink!
 
 zombiecraft.command.help=/zombiecraft help
+zombiecraft.command.loot.help=/loot help

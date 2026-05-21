@@ -8,24 +8,26 @@ import cpw.mods.fml.common.gameevent.InputEvent;
 
 public class EventKeyboardHandler {
 
-	@SubscribeEvent
-	public void handleKeyInputEvent(InputEvent.KeyInputEvent event) {
-		ModKeybindings pressed = this.getPressedKey();
-		
-		if(pressed != null) {
-			switch(pressed) {
-				case TEST:
-					Logger.info("Test key pressed!");
-					break;
-				default:
-					break;
-			}
-		}
+    @SubscribeEvent
+    public void handleKeyInputEvent(InputEvent.KeyInputEvent event) {
+	ModKeybindings pressed = this.getPressedKey();
+
+	if(pressed != null) {
+	    switch (pressed) {
+		case TEST:
+		    Logger.info("Test key pressed!");
+		    break;
+		default:
+		    break;
+	    }
 	}
-	
-	private ModKeybindings getPressedKey() {
-		for(ModKeybindings key : ModKeybindings.values()) if(key.isPressed()) return key;
-		
-		return null;
-	}
+    }
+
+    private ModKeybindings getPressedKey() {
+	for(ModKeybindings key : ModKeybindings.values())
+	    if(key.isPressed())
+		return key;
+
+	return null;
+    }
 }
